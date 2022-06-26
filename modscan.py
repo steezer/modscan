@@ -30,6 +30,7 @@ import array
 import optparse
 from IPy import IP
 import sys
+import time
 
 def main():
 
@@ -121,6 +122,7 @@ def main():
 					rsid[6]=sid		
 
 					#send data to device
+					print "Send: "+str(rsid)
 					s.send(rsid)
 					
 				except socket.error:
@@ -132,7 +134,7 @@ def main():
 				#end try
 				
 				try:
-
+					time.sleep(1)
 					#recieve data
 					data = s.recv(1024)
 					
@@ -149,8 +151,7 @@ def main():
 					resp.fromstring(data)
 
 					if (options.debug):
-						print "Recieved: "+str(resp)
-						print (int(resp[7]) == int(options.function))
+						print "Recv: "+str(resp)
 
 					#if the function matches the one sent we are all good
 					if (int(resp[7]) == int(options.function)):
